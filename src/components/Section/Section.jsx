@@ -1,29 +1,32 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import 'components/Section/section.css'
-import Statistics from "components/Statistics/Statistics";
-import FeedbackOptions from "components/FeedbackOptions/FeedbackOptions";
+import { Statistics } from "components/Statistics/Statistics";
+import { FeedbackOptions } from "components/FeedbackOptions/FeedbackOptions";
+import { Component } from "react";
+import { Feedback } from "./Section.styled";
 
-function Section ({ title, polls, onLeaveFeedback, countPositiveFeedbackPercentage, countTotalFeedback }) {
-    const { good, neutral, bad } = polls;
-    const total = countTotalFeedback(polls);
-    const positivePercentage = countPositiveFeedbackPercentage(polls);
+export class Section extends Component {
+    state = {
+        good: 0,
+        neutral: 0,
+        bad: 0
+    };
 
-    return(       
-        <div className="feedback">
-            {title && <h2>{title}</h2>}
-            <FeedbackOptions options={polls} onLeaveFeedback={onLeaveFeedback} />
-            <Statistics good={good} neutral={neutral} bad={bad} total={total} positivePercentage={positivePercentage} />
-        </div>
-    )
+    // обробляє натискання на кнопку
+    onLeaveFeedback = key => {
+        this.setState(prevState => ({ [key]: prevState[key] += 1 }))
+    };
+
+    render() {
+        return (
+            <Feedback>
+                <h2>Please leave your feedback</h2>
+
+                {/* блок кнопок */}
+                <FeedbackOptions onLeaveFeedback={this.onLeaveFeedback} /> 
+
+                {/* блок статистики */}
+                <Statistics data={this.state}/>
+            </Feedback>
+        )
+    }
 }
-
-Section.propTypes = {
-    title: PropTypes.string,
-    polls: PropTypes.object.isRequired,
-    onLeaveFeedback: PropTypes.func.isRequired,
-    countPositiveFeedbackPercentage: PropTypes.func.isRequired,
-    countTotalFeedback: PropTypes.func.isRequired,
-}
-
-export default Section;
