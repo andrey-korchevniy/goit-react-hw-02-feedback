@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import {Notification} from "components/Notification/Notification";
-import { FeedbackArea, ButtonGreen, ButtonRed, ButtonYellow } from "components/FeedbackOptions/FeedbackOptions.styled";
+import {Notification} from "./Notification/Notification";
+import { FeedbackArea, ButtonGreen, ButtonRed, ButtonYellow } from "../FeedbackOptions/FeedbackOptions.styled";
 
 export const Statistics = ({ data }) => {
     const { good, neutral, bad } = data;                // витягуємо значення змінних з об'єкту
